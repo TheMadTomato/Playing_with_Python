@@ -24,7 +24,7 @@ worksheet = workbook.active
 worksheet.title = "Sales Data"
 
 # Set column headers
-headers = ["Sale ID", "Item", "Money Paid", "Total Price"]
+headers = ["Sale ID", "Item", "Quantity", "Money Paid", "Total Price"]
 worksheet.append(headers)
 
 # Function for calculating the total price of an order
@@ -58,12 +58,27 @@ def process_sale(item, quantity, money_paid):
     total_lbp += money_paid * 100000
 
     # Add sale data to the Excel worksheet
-    worksheet.append([sale_id, item, money_paid, total_price])
+    worksheet.append([sale_id, item, quantity, money_paid, total_price])
 
 # Example usage
-process_sale(BEER_TOKEN, 1, 3)  # Buy 1 beer for $3
-process_sale(BLUE_WINE_TOKEN, 1, 4)  # Buy 1 blue wine for $4
-process_sale(RED_WINE_TOKEN, 2, 6)  # Buy 2 red wines for $6
+# process_sale(BEER_TOKEN, 1, 3)  # Buy 1 beer for $3
+# process_sale(BLUE_WINE_TOKEN, 1, 4)  # Buy 1 blue wine for $4
+# process_sale(RED_WINE_TOKEN, 2, 6)  # Buy 2 red wines for $6
+
+#Main Loop
+condition = True
+while condition:
+    choice = str(input("Want to Proceed? "))
+
+    if choice == "yes" or choice == "y" or choice == "Y":
+        picked_item = str(input("input picked item: "))
+        num_of_item = int(input("input the quantity: "))
+        money_to_pay = int(input("input the amount of money paid: "))
+        
+        process_sale(picked_item, num_of_item, money_to_pay)
+    
+    if choice == "no" or choice == "n" or choice == "N":
+        condition = False
 
 # Save the workbook to a file
 workbook.save("sales_data.xlsx")
