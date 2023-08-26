@@ -15,6 +15,17 @@ RED_WINE_TOKEN = "red"
 PINK_WINE_TOKEN = "pink"
 BLUE_WINE_TOKEN = "blue"
 
+# Conversion factor: 1 dollar = 100000 LBP
+CONVERSION_FACTOR = 100000
+
+# Function to convert from LBP to dollars
+def lbp_to_dollars(amount_lbp):
+    return amount_lbp / CONVERSION_FACTOR
+
+# Function to convert from dollars to LBP
+def dollars_to_lbp(amount_dollars):
+    return amount_dollars * CONVERSION_FACTOR
+
 # Initialize Counting Varibales
 Beer_Counter = 0
 White_Counter = 0
@@ -51,8 +62,13 @@ def calculate_price(item, quantity):
         raise ValueError("Invalid item")
 
 # Function for processing a sale
-def process_sale(item, quantity, money_paid):
+def process_sale(item, quantity, money_paid, currency="dollars"):
+
     total_price = calculate_price(item, quantity)
+    
+    if currency == "lbp":
+        money_paid = lbp_to_dollars(money_paid)
+    
     if money_paid < total_price:
         raise ValueError("Insufficient funds")
     
@@ -76,22 +92,18 @@ def process_sale(item, quantity, money_paid):
     elif item == BLUE_WINE_TOKEN:
         Blue_Counter += quantity
     
-    global total_sales, total_dollars, total_lbp
+    global total_sales, total_dollars, total_lbp 
     total_sales += total_price
     total_dollars += total_price
-    total_lbp += money_paid * 100000
+    total_lbp += money_paid# * 100000
 
     # Add sale data to the Excel worksheet
     worksheet.append([sale_id, item, quantity, money_paid, total_price])
 
-# Example usage
-# process_sale(BEER_TOKEN, 1, 3)  # Buy 1 beer for $3
-# process_sale(BLUE_WINE_TOKEN, 1, 4)  # Buy 1 blue wine for $4
-# process_sale(RED_WINE_TOKEN, 2, 6)  # Buy 2 red wines for $6
-
 # Initialize the amount of money in the case
 total_dollars = int(input("Input how much money there is in the case at start: "))
 
+#Main Loop
 #Main Loop
 clear_ter()
 condition = True
@@ -99,11 +111,25 @@ while condition:
     choice = str(input("Want to Proceed? "))
 
     if choice == "yes" or choice == "y" or choice == "Y":
-        picked_item = str(input("input picked item: "))
-        num_of_item = int(input("input the quantity: "))
-        money_to_pay = int(input("input the amount of money paid: "))
-        
-        process_sale(picked_item, num_of_item, money_to_pay)
+        sale_items = []  # List to store items and quantities in this sale
+        currency_choice = input("Choose currency (dollars or lbp): ").lower()
+
+        while True:
+            picked_item = str(input("Input picked item (or 'done' to finish): "))
+            if picked_item == "done":
+                break
+            num_of_item = int(input("Input the quantity: "))
+            sale_items.append((picked_item, num_of_item))
+
+        if currency_choice == "lbp":
+            money_to_pay_lbp = int(input("Input the amount of money paid in LBP: "))
+            for item, quantity in sale_items:
+                process_sale(item, quantity, money_to_pay_lbp, currency="lbp")
+            total_lbp += money_to_pay_lbp  # Add money_paid to total_lbp only once
+        else:
+            money_to_pay = int(input("Input the amount of money paid in dollars: "))
+            for item, quantity in sale_items:
+                process_sale(item, quantity, money_to_pay)
         clear_ter()
         print("Sales Data:")
         for sale_id, sale_data in sales_data.items():
@@ -113,7 +139,7 @@ while condition:
             print(f"  Money paid: ${sale_data['money_paid']}")
             print(f"  Return: ${sale_data['money_paid'] - sale_data['total_price']}")
             print(f"  Total price: ${sale_data['total_price']}")
-  
+
     if choice == "no" or choice == "n" or choice == "N":
         condition = False
 
@@ -132,7 +158,6 @@ item_summary_headers = ["Item", "Total Quantity Sold"]
 worksheet.append(item_summary_headers)
 
 item_summaries = [
-    ("Beer", Beer_Counter),
     ("White Wine", White_Counter),
     ("Red Wine", Red_Counter),
     ("Pink Wine", Pink_Counter),
@@ -145,8 +170,11 @@ for item, quantity_sold in item_summaries:
 # Add a row for total dollars
 worksheet.append(["Total Dollars", total_dollars])
 
+# Add a row for total LBP
+worksheet.append(["Total LBP", total_lbp])
+
 # Save the workbook with updated summaries
-workbook.save("sales_data_with_summaries.xlsx")
+workbook.save("sales_data.xlsx")
 
 
 # Print sales data
@@ -170,5 +198,5 @@ print("Blue Wine: ", Blue_Counter)
 # Print revenue data
 print(f"Total sales: ${total_sales}")
 print(f"Total dollars: ${total_dollars}")
-print(f"Total LBP: {total_lbp}")
+print(f"Total LBP: {total_lbp:,}L.L")
 
