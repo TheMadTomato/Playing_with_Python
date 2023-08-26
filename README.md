@@ -13,3 +13,7 @@ Random code --> nothing special, just pracitce code that i still had laying arou
 Simple games --> as the name suggest, simple CLI games
 
 tkapp --> A pdf reader GUI where i learned how to use tkinter.
+
+ZipCracker --> A concept of password bruteforce attack using python
+
+Item_Calc --> A Sale tracking project i am making out of boredom to automate my tasks at work
