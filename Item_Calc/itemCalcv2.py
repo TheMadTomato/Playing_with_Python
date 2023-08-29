@@ -64,14 +64,18 @@ def calculate_price(item, quantity):
 # Function for processing a sale
 def process_sale(item, quantity, money_paid, currency="dollars"):
 
+    if quantity <= 0:
+        raise ValueError("Quantity must be a positve integer")
+
+    if item not in [BEER_TOKEN, WHITE_WINE_TOKEN, RED_WINE_TOKEN, PINK_WINE_TOKEN, BLUE_WINE_TOKEN]:
+        raise ValueError("Invalid item")
     total_price = calculate_price(item, quantity)
     
     if currency == "lbp":
         money_paid = lbp_to_dollars(money_paid)
     
     if money_paid < total_price:
-        raise ValueError("Insufficient funds")
-    
+        raise ValueError("Insufficient funds. Please provide enough money to cover the total price.") 
     sale_id = len(sales_data) + 1
     sales_data[sale_id] = {
         "item": item,
@@ -104,13 +108,17 @@ def process_sale(item, quantity, money_paid, currency="dollars"):
 total_dollars = int(input("Input how much money there is in the case at start: "))
 
 #Main Loop
-#Main Loop
 clear_ter()
 condition = True
 while condition:
-    choice = str(input("Want to Proceed? "))
+    print("Menu:")
+    print("1. Add Sale")
+    print("2. View Summaries")
+    print("3. Exit")
+    
+    choice = input("Enter your choice: ")
 
-    if choice == "yes" or choice == "y" or choice == "Y":
+    if choice == "1":
         sale_items = []  # List to store items and quantities in this sale
         currency_choice = input("Choose currency (dollars or lbp): ").lower()
 
@@ -118,19 +126,42 @@ while condition:
             picked_item = str(input("Input picked item (or 'done' to finish): "))
             if picked_item == "done":
                 break
+
+            if picked_item not in [BEER_TOKEN, WHITE_WINE_TOKEN, RED_WINE_TOKEN, PINK_WINE_TOKEN, BLUE_WINE_TOKEN]:
+                valid_items = ', '.join([BEER_TOKEN, WHITE_WINE_TOKEN, RED_WINE_TOKEN, PINK_WINE_TOKEN, BLUE_WINE_TOKEN])
+                print(f"Invalid item. Valid options: {valid_items}")
+                continue
+
             num_of_item = int(input("Input the quantity: "))
+            if num_of_item <= 0:
+                print("Quantity must be a positive integer.")
+                continue
+
             sale_items.append((picked_item, num_of_item))
 
         if currency_choice == "lbp":
             money_to_pay_lbp = int(input("Input the amount of money paid in LBP: "))
-            for item, quantity in sale_items:
-                process_sale(item, quantity, money_to_pay_lbp, currency="lbp")
-            total_lbp += money_to_pay_lbp  # Add money_paid to total_lbp only once
+            try:
+                for item, quantity in sale_items:
+                    process_sale(item, quantity, money_to_pay_lbp, currency="lbp")
+                total_lbp += money_to_pay_lbp  # Add money_paid to total_lbp only once
+                clear_ter()
+            except ValueError as e:
+                clear_ter()
+                print("")
+                print(str(e))
+                print("")
         else:
             money_to_pay = int(input("Input the amount of money paid in dollars: "))
-            for item, quantity in sale_items:
-                process_sale(item, quantity, money_to_pay)
-        clear_ter()
+            try:
+                for item, quantity in sale_items:
+                    process_sale(item, quantity, money_to_pay)
+                clear_ter()
+            except ValueError as e:
+                clear_ter()
+                print("")
+                print(str(e))
+                print("")
         print("Sales Data:")
         for sale_id, sale_data in sales_data.items():
             print(f"Sale #{sale_id}:")
@@ -140,9 +171,24 @@ while condition:
             print(f"  Return: ${sale_data['money_paid'] - sale_data['total_price']}")
             print(f"  Total price: ${sale_data['total_price']}")
 
-    if choice == "no" or choice == "n" or choice == "N":
-        condition = False
+    elif choice == "2":
+        clear_ter()
+        print("Item Summaries:")
+        item_summaries = [
+            ("White Wine", White_Counter),
+            ("Red Wine", Red_Counter),
+            ("Pink Wine", Pink_Counter),
+            ("Blue Wine", Blue_Counter),
+            ("Beer", Beer_Counter)
+        ]
+        for item, quantity_sold in item_summaries:
+            print(f"{item}: {quantity_sold}")
+        print(f"Total sales: ${total_sales}")
+        print(f"Total dollars: ${total_dollars}")
+        print(f"Total LBP: {total_lbp:,}L.L")
 
+    elif choice == "3":
+        condition = False
 # Save the workbook to a file
 workbook.save("sales_data.xlsx")
 
