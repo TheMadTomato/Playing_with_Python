@@ -46,3 +46,14 @@ This Program serves as a way to automate a part of my part-time job where i need
     - Consider implementing a backup system to save previous versions of your sales data file. Additionally, using version control (like Git) can help you track changes and collaborate more effectively.
 
 Remember that these are just suggestions, and you can tailor them to your specific needs and programming goals. Each enhancement can add complexity to your program, so prioritize based on what will provide the most value to your use case.
+
+
+# What are the goals of The **Warehouse_Tracking_Feature** Branch?         
+
+Mainly, the code i am writing in this branch have a soul purpose of tracking the ammount of pkgs in the shops storage room and save the results on a spreadsheet.
+
+- The program should always append and apply the changes if the we take from or put in pkgs in the warehouse.
+- The date of each action should be saved.
+- Output a message for when we need to refill a certain item pkg.
+- Output the number of pkgs as well as the total number of units in each.
+- If all of the above was acheived, I do want to use this code in refrence to the main ItemCalc.py
