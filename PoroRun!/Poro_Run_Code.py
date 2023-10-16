@@ -5,11 +5,11 @@ from random import randint, choice
 class Player(pygame.sprite.Sprite):
 	def __init__(self):
 		super().__init__()
-		player_walk_1 = pygame.image.load('graphics/player/player_walk_1.png').convert_alpha()
-		player_walk_2 = pygame.image.load('graphics/player/player_walk_2.png').convert_alpha()
+		player_walk_1 = pygame.image.load('graphics/Player/player_walk_1.png').convert_alpha()
+		player_walk_2 = pygame.image.load('graphics/Player/player_walk_2.png').convert_alpha()
 		self.player_walk = [player_walk_1,player_walk_2]
 		self.player_index = 0
-		self.player_jump = pygame.image.load('graphics/player/jump.png').convert_alpha()
+		self.player_jump = pygame.image.load('graphics/Player/jump.png').convert_alpha()
 
 		self.image = self.player_walk[self.player_index]
 		self.rect = self.image.get_rect(midbottom = (80,300))
@@ -110,7 +110,7 @@ sky_surface = pygame.image.load('graphics/Sky.png').convert()
 ground_surface = pygame.image.load('graphics/ground.png').convert()
 
 # Intro screen
-player_stand = pygame.image.load('graphics/player/player_stand.png').convert_alpha()
+player_stand = pygame.image.load('graphics/Player/player_stand.png').convert_alpha()
 player_stand = pygame.transform.rotozoom(player_stand,0,2)
 player_stand_rect = player_stand.get_rect(center = (400,200))
 
@@ -164,5 +164,5 @@ while True:
 		if score == 0: screen.blit(game_message,game_message_rect)
 		else: screen.blit(score_message,score_message_rect)
 
-	pygame.display.update()
-	clock.tick(60)
+    pygame.display.update()
+    clock.tick(60)
