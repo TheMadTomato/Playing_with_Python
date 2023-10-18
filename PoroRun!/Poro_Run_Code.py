@@ -164,5 +164,5 @@ while True:
 		if score == 0: screen.blit(game_message,game_message_rect)
 		else: screen.blit(score_message,score_message_rect)
 
-    pygame.display.update()
-    clock.tick(60)
+pygame.display.update()
+clock.tick(60)
