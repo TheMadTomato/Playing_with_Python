@@ -1,22 +1,17 @@
-"""
-Write a python program to develop the below stars, the side of square
-should be entered by the user
-"""
+import time
 
-# Square Length and width input. try length: 5 & width = 9
-length = eval(input("Enter length: "))
-width = eval(input("Enter width: "))
+print("Epoch to GMT Conversion")
+#epoch_time = time.time() #To test it with the second amount from January 1, 1970 till now.
+epoch_time = 86399 # The amount of seconds in a single day
 
-# Neste for to draw square
-for row in range (length):
-    for col in range (width):
-        # Condition for a hollow swuare
-        if row == 0 or row == length - 1 or col == 0 or col == width - 1:
-            # The Following if else is to let the square look like the output in the problem
-            if col % 2 == 1:
-                print(" ", end="")
-            else:
-                print("*", end="")
-        else:
-            print(" ", end="")
-    print()
+# Dividing epoch_time by 86400 to get the days
+days = epoch_time // 86400
+# Dividing epoch_time by 3600 to get the hours
+hours = (epoch_time % 86400) // 3600
+# Dividing the remainder of the above division by 60 to get the minutes
+minutes = (epoch_time % 3600) // 60
+
+# Dividing the remainder of the above division by 60 to get the seconds
+seconds = (epoch_time % 3600) % 60
+
+print("The Time is: %d:%d:%d:%d" % (days, hours, minutes, seconds))

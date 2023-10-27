@@ -1,81 +1,78 @@
-"""
-Let’s play this GAME.
-Write a python program to announce the winner between two players.
-•
- First, we should enter total number of Marble. (Example: 20 marbles mean each player has
-10 marbles in his pocket.
-oooPlayer 1 start first
-Announce the winner at the end of the program
-Use for loop or while, and condition
-"""
+from os import system
+print("\tWelcome To Distance Converter\t\n")
 
+# Feet to Inches and Inches to Feet conversion
+def feet_to_inches(feet):
+    return feet * 12
+def inches_to_feet(inches):
+    return inches / 12
 
-# Pre-requisite
-def Odd_or_Even(number):
-    return number % 2 == 0
+# Feet to Yards and Yards to Feet conversion
+def feet_to_yards(feet):
+    return feet / 3
+def yards_to_feet(yards):
+    return yards * 3
 
+# Feet to Miles and Miles to Feet conversion
+def miles_to_feet(miles):
+    return miles * 5280
+def feet_to_miles(feet):
+    return feet / 5280
 
-# 1. Enter the total number of marbles
-total_marbles = int(input("Enter the total number of marbles: "))
-
-# 2. Divide the total number of marbles by 2
-player1_marbles = total_marbles // 2
-player2_marbles = total_marbles // 2
-
-# Main Loop
+# Main Program
 while True:
-    # 3. Player 1 starts first
-    print(f"Player 1 has {player1_marbles} marbles\nPlayer 2 has {player2_marbles} marbles")
-    while True:
-        # A do while style of loop to make sure the player enters a valid number
-        player1_picked_marbles = int(input("Player One : Enter Number of marble that you want to play with:  "))
-        if player1_picked_marbles > player1_marbles:
-            print("Invalid number of marbles. Try again.")
-            continue
+    choice = eval(input("Enter 1 for Feet to Inches and Inches to Feet conversion\n"
+                        "Enter 2 for Feet to Yards and Yards to Feet conversion\n"
+                        "Enter 3 for Feet to Miles and Miles to Feet conversion\n"
+                        "Enter 4 to Exit\n"
+                        "Enter your choice: "))
+    if choice == 1:
+        system("clear")
+        sub_choice = eval(input("Enter 1 for Feet to Inches conversion\n"
+                                "Enter 2 for Inches to Feet conversion\n"
+                                "Enter your choice: "))
+        if sub_choice == 1:
+            feet = eval(input("Enter the value in feet: "))
+            print("The value in inches is: ", feet_to_inches(feet))
+        elif sub_choice == 2:
+            inches = eval(input("Enter the value in inches: "))
+            print("The value in feet is: ", inches_to_feet(inches))
         else:
-            break
-
-    # 4. Player 2 guess if it is even or odd
-    player2_guess = input("Player Two : Guess if the number is 0.even or 1.odd:  ")
-    if Odd_or_Even(player1_picked_marbles) == Odd_or_Even(int(player2_guess)):
-        print("Player Two wins!")
-        player2_marbles += player1_picked_marbles
-        player1_marbles -= player1_picked_marbles
-    else:
-        print("Player Two loses!")
-        player1_marbles += player1_picked_marbles
-        player2_marbles -= player1_picked_marbles
-
-    # 5. Check if game is finished
-    if player1_marbles != 0 and player2_marbles != 0:
-        print("The game is not yet finished!")
-        # 6. Player 2 starts first
-        print(f"Player 1 has {player1_marbles} marbles\nPlayer 2 has {player2_marbles} marbles")
-        while True:
-            # A do while style of loop to make sure the player enters a valid number
-            player2_picked_marbles = int(input("Player Two : Enter Number of marble that you want to play with:  "))
-            if player2_picked_marbles > player2_marbles:
-                print("Invalid number of marbles. Try again.")
-            else:
-                break
-
-        # 7. Player 1 guess if it is even or odd
-        player1_guess = input("Player One : Guess if the number is 0.even or 1.odd:  ")
-        if Odd_or_Even(int(player1_guess)) == Odd_or_Even(player2_picked_marbles):
-            print("Player One wins!")
-            player1_marbles += player2_picked_marbles
-            player2_marbles -= player2_picked_marbles
+            print("Invalid Choice\n")
+    elif choice == 2:
+        system("clear")
+        sub_choice = eval(input("Enter 1 for Feet to Yards conversion\n"
+                                "Enter 2 for Yards to Feet conversion\n"
+                                "Enter your choice: "))
+        if sub_choice == 1:
+            feet = eval(input("Enter the value in feet: "))
+            print("The value in yards is: ", feet_to_yards(feet))
+        elif sub_choice == 2:
+            yards = eval(input("Enter the value in yards: "))
+            print("The value in feet is: ", yards_to_feet(yards))
         else:
-            print("Player One loses!")
-            player2_marbles += player2_picked_marbles
-            player1_marbles -= player2_picked_marbles
-
-        # 8. Check if game is finished
-        if player1_marbles != 0 and player2_marbles != 0:
-            print("The game is not yet finished!")
+            system("clear")
+            print("Invalid Choice\n")
+    elif choice == 3:
+        system("clear")
+        sub_choice = eval(input("Enter 1 for Feet to Miles conversion\n"
+                                "Enter 2 for Miles to Feet conversion\n"
+                                "Enter your choice: "))
+        if sub_choice == 1:
+            feet = eval(input("Enter the value in feet: "))
+            print("The value in miles is: ", feet_to_miles(feet))
+        elif sub_choice == 2:
+            miles = eval(input("Enter the value in miles: "))
+            print("The value in feet is: ", miles_to_feet(miles))
         else:
-            break
-        continue
-    else:
+            system("clear")
+            print("Invalid Choice\n")
+    elif choice == 4:
+        print("Exiting...\n")
         break
+    else:
+        system("clear")
+        print("Invalid Choice\n")
+
+
 
