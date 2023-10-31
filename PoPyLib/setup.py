@@ -5,7 +5,7 @@ setup(
     version='1.0.0',
     description='A Python Library covering baic math, geometry, and string functions',
     author='Paul Estephan',
-    packages=['PyPo'],
+    packages=['MathPy', 'StringPy', 'GeoPy', 'Py'],
     install_requires=['sympy'],  # List any dependencies here
     classifiers=[
         'Development Status :: 3 - Alpha',
