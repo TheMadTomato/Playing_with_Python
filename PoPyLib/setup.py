@@ -1,7 +1,7 @@
 from setuptools import setup
 
 setup(
-    name='PyPo',
+    name='PoPyLib',
     version='1.0.0',
     description='A Python Library covering baic math, geometry, and string functions',
     author='Paul Estephan',
