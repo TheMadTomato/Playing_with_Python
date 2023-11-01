@@ -1,4 +1,1 @@
-GeoPy
-MathPy
-Py
-StringPy
+
