@@ -15,4 +15,5 @@ current_minute = total_minutes % 60
 total_hours = total_minutes // 60
 current_hour = total_hours % 24
 
-print("Current time is", current_hour, ":", current_minute, ":", current_second, "GMT")
+#beirut time zone is GMT+2
+print("Current time is", current_hour + 2, ":", current_minute, ":", current_second, "GMT")
