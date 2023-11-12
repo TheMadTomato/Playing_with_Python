@@ -2,11 +2,10 @@
 
 ## Introduction
 
-This Python script utilizes the `yt-dlp` library to download audio and video content from YouTube. The current version focuses on downloading audio in the OPUS format. Please note that the OPUS format is supported primarily on Linux.
-
+This Python script utilizes the `yt-dlp` library to download audio and video content from YouTube. The current version supports downloading audio in the OPUS, MP3, AAC, OGG, M4A, and WAV formats. As well as downloading video in the MP4, FLV, WEBM, and 3GP formats.
 ## Features
 
-- Download YouTube audio in OPUS format.
+- Download YouTube audio and video in formats suppoted by `yt-dlp`.
 - Easily customizable with `yt-dlp` options.
 - Simple command-line interface for quick usage.
 
@@ -30,7 +29,7 @@ The script uses the `yt-dlp` library, allowing you to configure various options.
 ## Future Updates
 
 - GUI interface for user-friendly interaction.
-- Support for downloading video content in different formats.
+- Give users freedom in choosing the destination folder.
 - Improved error handling and logging.
 
 ## Contributing
@@ -45,8 +44,6 @@ This project is licensed under the MIT License - see the [LICENSE](LICENSE) file
 
 - Thanks to the developers of `yt-dlp` for providing a powerful library for working with YouTube content.
 
-## Disclaimer
+## Version
 
-This script is for educational and personal use only. Respect the terms of service of the platforms you interact with.
-
-Happy downloading! 🎉
+1.0.3
