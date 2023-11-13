@@ -1,63 +1,55 @@
 import yt_dlp
 import platform
 import shutil
+import os
 
 
 def move_to_music_file(file):
-    # function to do the proper file moving process based on the system type
     os_type = platform.system()
     if os_type == 'Windows':
-        destination = "C:\\Users\\%username%\\Music"
+        destination = os.path.join("C:", "Users", "%username%", "Music")
     elif os_type == 'Linux' or os_type == 'Darwin':
-        destination = "~/Music"
+        destination = os.path.join("~", "Music")
     else:
         print("Unsupported operating system")
         return
 
     try:
-        shutil.move(file, destination)
+        shutil.move(file, os.path.expanduser(destination))
         print("Successfully moved to Music folder.")
     except Exception as e:
         print(f"Error moving file: {e}")
-
 def move_to_videos_file(file):
-    # function to do the proper file moving process based on the system type
     os_type = platform.system()
     if os_type == 'Windows':
-        destination = "C:\\Users\\%username%\\Videos"
+        destination = os.path.join("C:", "Users", "%username%", "Videos")
     elif os_type == 'Linux' or os_type == 'Darwin':
-        destination = "~/Videos"
+        destination = os.path.join("~", "Videos")
     else:
         print("Unsupported operating system")
         return
 
     try:
-        shutil.move(file, destination)
+        shutil.move(file, os.path.expanduser(destination))
         print("Successfully moved to Videos folder.")
     except Exception as e:
         print(f"Error moving file: {e}")
 
 def pick_audio_format():
-    # Choose the wanted audio format from a list of the supported one available
     supported_audio_formats = ['MP3', 'AAC', 'OGG', 'M4A', 'WAV', 'OPUS']
-    print("Available audio formats: ")
-    for i in range(len(supported_audio_formats)):
-        if i == len(supported_audio_formats) - 1:
-            print(supported_audio_formats[i], end=".")
+    print("Available audio formats: ", end="")
+    print(", ".join(supported_audio_formats) + ".")
+
+    while True:
+        audio_format = input("Choose the wanted audio format: ").upper()
+        if audio_format in supported_audio_formats:
+            return audio_format
         else:
-            print(supported_audio_formats[i], end=", ")
-    try:
-        audio_format = input("\nChoose the wanted audio format: ")
-        if audio_format.upper() not in supported_audio_formats:
-            print("Invalid audio format.")
-            return
-    except Exception as e:
-        print(f"Error: {e}")
-        return
-    return audio_format
+            print("Invalid audio format. Please choose from the available options.")
 def download_audio(link):
     # Download youtube audio with the yt_dlp module and save it in the format picked in pick_audio_format()
-    with yt_dlp.YoutubeDL({'extract_audio': True, 'format': 'bestaudio', 'outtmpl': '%(title)s.'+pick_audio_format()})\
+    audio_format = pick_audio_format()
+    with yt_dlp.YoutubeDL({'extract_audio': True, 'format': 'bestaudio', 'outtmpl': '%(title)s.'+audio_format})\
             as video:
         info_dict = video.extract_info(link, download=True)
         video_title = info_dict['title']
@@ -65,26 +57,19 @@ def download_audio(link):
         video.download(link)
         print("Successfully Downloaded")
         # move the downloaded file to the music folder
-        move_to_music_file(video_title+'.'+pick_audio_format())
+        move_to_music_file(video_title+'.'+audio_format)
 
 def pick_video_format():
-    # Choose the wanted video format from a list of the supported one available
     supported_video_formats = ['MP4', 'FLV', 'WEBM', '3GP']
-    print("Available video formats: ")
-    for i in range(len(supported_video_formats)):
-        if i == len(supported_video_formats) - 1:
-            print(supported_video_formats[i], end=".")
+    print("Available video formats: ", end="")
+    print(", ".join(supported_video_formats) + ".")
+
+    while True:
+        video_format = input("Choose the wanted video format: ").upper()
+        if video_format in supported_video_formats:
+            return video_format.lower()
         else:
-            print(supported_video_formats[i], end=", ")
-    try:
-        video_format = input("\nChoose the wanted video format: ")
-        if video_format.upper() not in supported_video_formats:
-            print("Invalid video format.")
-            return
-    except Exception as e:
-        print(f"Error: {e}")
-        return
-    return video_format
+            print("Invalid video format. Please choose from the available options.")
 def download_video(link):
     # Download youtube video with yt-dlp module
     with yt_dlp.YoutubeDL({'format': 'bestvideo+bestaudio', 'outtmpl': '%(title)s.'+pick_video_format()})\
