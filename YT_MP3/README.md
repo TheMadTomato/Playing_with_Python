@@ -32,6 +32,7 @@ The script uses the `yt-dlp` library, allowing you to configure various options.
 - Considering rebuilding the app with `PyQT` or `Kivy`.
 - Improved error handling and logging.
 - Fix the Progress bar.
+- Continue working on CLI version.
 
 ## Contributing
 
