@@ -1,2 +1,3 @@
-s1 = ("helo")
-print("The first character in s1 is", s1.__getitem__(0) )
+"""
+this file is meant for testing code snippets
+"""
