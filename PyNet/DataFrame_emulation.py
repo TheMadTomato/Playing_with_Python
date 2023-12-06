@@ -50,7 +50,7 @@ class DataFrame:
 def random_mac():
     # Random mac address generator
     return ":".join("{:02x}".format(random.randint(0, 255)) for _ in range(6))
-def test1():
+def main():
     mac1, mac2 = random_mac(), random_mac()
     # Create a frame
     frame = DataFrame(mac1, mac2, "Hello World")
@@ -64,7 +64,7 @@ def test1():
     print("Type and lenght: ")
     print(frame.type_and_lenght())
     # Print the data
-    print("Data: ")
+    print("Payload: ")
     print(frame.data)
     # Print the FCS
     print("Trailer: ")
@@ -73,6 +73,4 @@ def test1():
     print("FCS Check: ")
     print(frame.check_fcs(frame.fcs()))
 # test
-if __name__ == "__main__":
-
-    test1()
+main()
