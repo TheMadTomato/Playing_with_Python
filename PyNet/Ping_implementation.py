@@ -5,7 +5,7 @@ why not try to implement it in python? so here i am.
 while working on ping there is a few things to keep in mind:
 1. the ping command is a command line command, so i will have to use the subprocess module.
 2. the ping command is a system command, so it will be different on different operating systems.
-3. the ping command is a network command, so i will have to use the socket module.
+3. the ping command is a network command, so i will have to use the socket module. https://docs.python.org/3/library/socket.html
 4. the ping's echo request and echo reply are ICMP packets, so i will have to use the ICMP protocol.
    the exchange of echos happens between a source and a destination, so i will have to use the IP protocol.
 5. echo request are should be 32 bytes or 100 bytes on cisco devices.
